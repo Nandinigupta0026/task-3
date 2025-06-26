@@ -16,10 +16,10 @@ function Login() {
     setError('');
     try {
       const res = await axios.post('http://localhost:8080/auth/login', form);
-      localStorage.setItem('user', JSON.stringify(res.data.user));
+      localStorage.setItem('userId', res.data.user._id);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.error || 'Login failed');
+     console.error("Login failed:", err.response?.data || err.message);
     }
   };
 

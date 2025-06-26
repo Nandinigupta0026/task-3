@@ -3,9 +3,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./Models/db');
-const authrout = require('./Routes/authrouter.js');
- const eventRoutes = require('./routes/eventroutes');
-// const bookingRoutes = require('./routes/bookingRoutes');
+const authrout = require('./Routes/authroutes.js');
+ const eventRoutes = require('./Routes/eventroutes');
+ const bookingRoutes = require('./Routes/bookingroutes');
 
 require('dotenv').config();
 
@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
 
 
 app.use('/auth',authrout);
- app.use('/events', eventRoutes);
-// app.use('/bookings', bookingRoutes);
+app.use('/events', eventRoutes);
+app.use('/bookings', bookingRoutes);
 
 const PORT = process.env.PORT || 8080;
 

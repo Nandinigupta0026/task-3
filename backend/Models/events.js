@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const eventSchema = new mongoose.Schema({
+const eventSchema = new Schema({
   title: 
   {
     type: String,
@@ -15,15 +16,24 @@ const eventSchema = new mongoose.Schema({
      enum: ["movie", "concert", "train"],
      required:true, 
   },
+   
+  availableDates :[String],
+  availableTimes: [String],
+
   date: 
   {
     type: Date,
-    required:true,
+     required: function () {
+      return this.category !== "movie";
+    }
   },
 
   time: 
   { 
-    type: String 
+    type: String ,
+    required: function () {
+      return this.category !== "movie";
+    }
   },
  location: 
   { 

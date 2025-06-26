@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/footer';
 import Navbar from '../components/navbar';
+import movieImg from '../assets/movie.jpg';
+import concertImg from '../assets/concert.jpg';
+import trainImg from '../assets/train.jpg';
 function Home() {
   return (
     
@@ -25,18 +28,21 @@ function Home() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Movie Card */}
         <Link to="/events/movie" className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition cursor-pointer">
+           <img src={movieImg} alt="Movie" className="w-full h-40 object-cover rounded mb-4" />
           <h2 className="text-xl font-bold text-blue-600 mb-2"> Movie Tickets</h2>
           <p className="text-gray-600">Browse latest movies and book your favorite seats at nearby theaters.</p>
         </Link>
 
         {/* Concert Card */}
         <Link to="/events/concert" className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition cursor-pointer">
+           <img src={concertImg} alt="Concert" className="w-full h-40 object-cover rounded mb-4" />
           <h2 className="text-xl font-bold text-pink-600 mb-2"> Concerts</h2>
           <p className="text-gray-600">Discover live performances and musical events happening near you.</p>
         </Link>
 
         {/* Train Card */}
         <Link to="/events/train" className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition cursor-pointer">
+            <img src={trainImg} alt="Train" className="w-full h-40 object-cover rounded mb-4" />
           <h2 className="text-xl font-bold text-green-600 mb-2"> Train Tickets</h2>
           <p className="text-gray-600">Plan your journey and book intercity or long-distance train tickets.</p>
         </Link>

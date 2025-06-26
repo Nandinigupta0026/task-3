@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -27,7 +28,7 @@ const userSchema = new mongoose.Schema({
 
   wallet: {
     type: Number,
-    default: 1000, // credited on signup
+    default: 1000, 
   },
 });
 
