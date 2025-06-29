@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-function Navbar({ user }) {
+function Navbar({ user, setUser }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('user')
+    localStorage.removeItem('user');
     navigate('/login');
   };
 
@@ -14,12 +14,12 @@ function Navbar({ user }) {
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo */}
+        
         <Link to="/" className="text-xl font-bold text-blue-600">
            Universal Tickets
         </Link>
 
-        {/* Navigation Links */}
+      
         <div className="flex gap-6 items-center">
           {!user && (
             <>
@@ -28,17 +28,17 @@ function Navbar({ user }) {
             </>
           )}
 
-          {/* User Navigation */}
+          
           {role === 'user' && (
             <>
               <Link to="/" className="text-gray-700 hover:text-blue-600">Home</Link>
-              <Link to="/bookings" className="text-gray-700 hover:text-blue-600">My Bookings</Link>
+              <Link to="/mybookings" className="text-gray-700 hover:text-blue-600">My Bookings</Link>
               <Link to="/profile" className="text-gray-700 hover:text-blue-600">Profile</Link>
               <button onClick={handleLogout} className="text-red-600 font-medium">Logout</button>
             </>
           )}
 
-          {/* Vendor Navigation */}
+        
           {role === 'vendor' && (
             <>
               <Link to="/dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</Link>
@@ -48,14 +48,12 @@ function Navbar({ user }) {
             </>
           )}
 
-          {/* Admin Navigation */}
+        
           {role === 'admin' && (
             <>
               <Link to="/dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</Link>
               <Link to="/users" className="text-gray-700 hover:text-blue-600">Users</Link>
               <Link to="/vendors" className="text-gray-700 hover:text-blue-600">Vendors</Link>
-              <Link to="/moderate-events" className="text-gray-700 hover:text-blue-600">Moderate</Link>
-              <Link to="/analytics" className="text-gray-700 hover:text-blue-600">Analytics</Link>
               <button onClick={handleLogout} className="text-red-600 font-medium">Logout</button>
             </>
           )}

@@ -6,6 +6,7 @@ const db = require('./Models/db');
 const authrout = require('./Routes/authroutes.js');
  const eventRoutes = require('./Routes/eventroutes');
  const bookingRoutes = require('./Routes/bookingroutes');
+ const userRoutes = require('./Routes/usersroutes.js')
 
 require('dotenv').config();
 
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 app.use('/auth',authrout);
 app.use('/events', eventRoutes);
 app.use('/bookings', bookingRoutes);
+app.use('/users', userRoutes);
 
 const PORT = process.env.PORT || 8080;
 

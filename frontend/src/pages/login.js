@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [user, setUser] = useState("null");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -13,20 +14,23 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     try {
-      const res = await axios.post('http://localhost:8080/auth/login', form);
-      localStorage.setItem('userId', res.data.user._id);
-      navigate('/');
+      const res = await axios.post("http://localhost:8080/auth/login", form);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      setUser(res.data.user);
+      navigate("/");
     } catch (err) {
-     console.error("Login failed:", err.response?.data || err.message);
+      console.error("Login failed:", err.response?.data || err.message);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">Login to Your Account</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
+          Login to Your Account
+        </h2>
 
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
@@ -60,8 +64,10 @@ function Login() {
         </form>
 
         <p className="text-sm text-gray-600 mt-4 text-center">
-          Don’t have an account?{' '}
-          <a href="/signup" className="text-blue-600 hover:underline">Sign up here</a>
+          Don't have an account?{" "}
+          <a href="/signup" className="text-blue-600 hover:underline">
+            Sign up here
+          </a>
         </p>
       </div>
     </div>

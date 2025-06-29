@@ -7,12 +7,10 @@ const signup = async (req, res) => {
     const { name, email, password, role } = req.body;
     const user = await UserModel.findOne({ email });
     if (user) {
-      return res
-        .status(409)
-        .json({
-          message: "User is already exist, you can login",
-          success: false,
-        });
+      return res.status(409).json({
+        message: "User is already exist, you can login",
+        success: false,
+      });
     }
     const userModel = new UserModel({ name, email, password, role });
     userModel.password = await bcrypt.hash(password, 10);
@@ -52,12 +50,12 @@ const login = async (req, res) => {
       message: "Login Success",
       success: true,
       jwtToken,
-        user: {
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-    role: user.role
-  }
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
     });
   } catch (err) {
     console.error("login error:", err);

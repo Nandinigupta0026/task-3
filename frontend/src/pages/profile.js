@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Profile = () => {
-  const userId = localStorage.getItem("userId");
+  const storedUser = localStorage.getItem("user");
+  const userId = storedUser ? JSON.parse(storedUser)._id : null;
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [form, setForm] = useState({
     name: "",
@@ -74,11 +76,14 @@ const Profile = () => {
     }
 
     try {
-      const res = await axios.post(`http://localhost:8080/auth/change-password`, {
-        userId,
-        currentPassword,
-        newPassword,
-      });
+      const res = await axios.post(
+        `http://localhost:8080/auth/change-password`,
+        {
+          userId,
+          currentPassword,
+          newPassword,
+        }
+      );
 
       setPasswordMessage(res.data.message || "Password changed successfully!");
       setCurrentPassword("");
@@ -86,17 +91,18 @@ const Profile = () => {
       setConfirmPassword("");
     } catch (err) {
       console.error("Change password failed", err);
-      setPasswordMessage(err.response?.data?.message || "Failed to change password.");
+      setPasswordMessage(
+        err.response?.data?.message || "Failed to change password."
+      );
     }
   };
 
   return (
     <div className="max-w-4xl mx-auto my-12 bg-gradient-to-br from-white via-blue-50 to-purple-100 p-10 rounded-xl shadow-2xl">
       <h1 className="text-4xl font-bold text-center text-blue-800 mb-10">
-         My Profile
+        My Profile
       </h1>
 
-      
       <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
         <img
           src={
@@ -122,7 +128,6 @@ const Profile = () => {
         </div>
       </div>
 
-    
       <form onSubmit={handleSave} className="grid md:grid-cols-2 gap-6">
         <div>
           <label className="block mb-1 text-sm font-semibold text-gray-700">
@@ -151,9 +156,30 @@ const Profile = () => {
           />
         </div>
 
-        <div className="md:col-span-2 mt-4">
-          <p className="text-sm text-gray-600"><strong> Role:</strong> {form.role}</p>
-          <p className="text-sm text-gray-600 mt-1"><strong>Wallet:</strong> ₹{form.wallet}</p>
+        <div>
+          <label className="block mb-1 text-sm font-semibold text-gray-700">
+            Role
+          </label>
+          <input
+            type="text"
+            name="role"
+            value={form.role}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 text-sm font-semibold text-gray-700">
+            Wallet
+          </label>
+          <input
+            type="number"
+            name="wallet"
+            value={form.wallet}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
         </div>
 
         <div className="md:col-span-2">
@@ -161,7 +187,7 @@ const Profile = () => {
             type="submit"
             className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 rounded-lg text-lg font-semibold hover:opacity-90 transition duration-200"
           >
-             Save Profile
+            Save Profile
           </button>
           {message && <p className="text-green-700 mt-2">{message}</p>}
         </div>
@@ -172,13 +198,15 @@ const Profile = () => {
           to="/mybookings"
           className="inline-block bg-gray-100 text-blue-700 hover:bg-gray-200 py-2 px-6 rounded-full text-sm font-medium shadow"
         >
-           View My Bookings
+          View My Bookings
         </Link>
       </div>
 
-
       <div className="mt-10 border-t pt-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4"> Change Password</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          {" "}
+          Change Password
+        </h2>
         <form onSubmit={handleChangePassword} className="space-y-4">
           <input
             type="password"
@@ -210,12 +238,17 @@ const Profile = () => {
           >
             Update Password
           </button>
-          {passwordMessage && <p className="text-sm mt-2 text-blue-700">{passwordMessage}</p>}
+          {passwordMessage && (
+            <p className="text-sm mt-2 text-blue-700">{passwordMessage}</p>
+          )}
         </form>
 
         <div className="mt-4 text-sm text-gray-600 text-center">
           Forgot password?{" "}
-          <Link to="/forgot-password" className="text-blue-600 underline hover:text-blue-800">
+          <Link
+            to="/forgot-password"
+            className="text-blue-600 underline hover:text-blue-800"
+          >
             Reset it here
           </Link>
         </div>
