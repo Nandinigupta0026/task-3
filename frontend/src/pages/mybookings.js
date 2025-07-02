@@ -5,7 +5,8 @@ const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
+    const userId = JSON.parse(localStorage.getItem("user"))?._id;
+
     if (!userId) return;
 
     axios

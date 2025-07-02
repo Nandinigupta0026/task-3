@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState , useEffect}from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/footer';
 import movieImg from '../assets/movie.jpg';
@@ -6,9 +6,19 @@ import concertImg from '../assets/concert.jpg';
 import trainImg from '../assets/train.jpg';
 
 
-function Home({user , setUser}) {
+function Home({user}) {
+  const [role, setRole] = useState("");
 
-     const role = user?.role;
+  useEffect(() => {
+    if (user?.role) {
+      setRole(user.role);
+    } else {
+      const stored = JSON.parse(localStorage.getItem("user"));
+      if (stored?.role) setRole(stored.role);
+    }
+  }, [user]);
+
+  
   return (
     <>
     {role==='user' && (

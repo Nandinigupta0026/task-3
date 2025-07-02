@@ -14,7 +14,8 @@ import MyBookings from "./pages/mybookings";
 import ForgotPassword from "./pages/forgotpassword";
 import UserDetails from './pages/userdetails';
 import VendorDetails from './pages/vendordetails'
-
+import AddEvent from './pages/addevent';
+import MyEvents from './pages/myevents';
 
  function App() {
   const [user, setUser] = useState(null); 
@@ -47,6 +48,8 @@ import VendorDetails from './pages/vendordetails'
         <Route path="/mybookings" element={<MyBookings />} />
         <Route path="/users" element={<UserDetails/>}/>
         <Route path="/vendors" element={<VendorDetails/>}/>
+        <Route path="/add-event" element={<AddEvent />}/>
+        <Route path="/my-events" element={<MyEvents/>}/>
         {/* {<Route path="*" element={<h2>404 Not Found</h2>} />} */}
       </Routes>
     </Router>

@@ -12,18 +12,23 @@ const BookingTicket = () => {
   const [selectedTime, setSelectedTime] = useState("");
   const [booked, setBooked] = useState(false);
   const [showModal, setShowModal] = useState(false);
-     useEffect(() => {
+
+  useEffect(() => {
     const fetchEventAndBooking = async () => {
       try {
-        const userId = localStorage.getItem("userId");
+        const user = JSON.parse(localStorage.getItem("user"));
+        const userId = user?._id;
+         if (!userId) {
+          console.error("User not logged in");
+          return;
+        }
         const [eventRes, bookingRes] = await Promise.all([
           axios.get(`http://localhost:8080/events/${eventId}`),
-          axios.get(`http://localhost:8080/bookings/user/${userId}`)
+          axios.get(`http://localhost:8080/bookings/user/${userId}`),
         ]);
 
         setEvent(eventRes.data);
 
-        
         const alreadyBooked = bookingRes.data.some(
           (booking) =>
             booking.eventId?._id === eventId && booking.status !== "cancelled"
@@ -39,8 +44,21 @@ const BookingTicket = () => {
 
   const handleBooking = async () => {
     try {
-      const userId = localStorage.getItem("userId");
-       console.log("userId from localStorage:", userId);
+      const user = JSON.parse(localStorage.getItem("user"));
+      const userId = user?._id;
+      if (!userId) {
+      alert("User not logged in");
+      return;
+    }
+      console.log("userId from localStorage:", userId);
+
+       if (
+      event.category === "movie" &&
+      (!selectedDate || !selectedTime)
+    ) {
+      alert("Please select date and time for the movie.");
+      return;
+    }
       const bookingData = {
         userId,
         eventId,
@@ -57,7 +75,7 @@ const BookingTicket = () => {
         });
     } catch (err) {
       alert("Booking failed!");
-      console.error('BOOKING ERROR:', err.response?.data || err.message);
+      console.error("BOOKING ERROR:", err.response?.data || err.message);
       console.error(err);
     }
   };
@@ -133,12 +151,12 @@ const BookingTicket = () => {
         />
       </div>
 
-       {booked ? (
+      {booked ? (
         <button
           onClick={handleBookedClick}
           className="w-full bg-green-600 text-white py-2 rounded cursor-pointer hover:bg-green-700"
         >
-          Booked 
+          Booked
         </button>
       ) : (
         <button
@@ -148,7 +166,7 @@ const BookingTicket = () => {
           Book Now
         </button>
       )}
-       <ConfirmModal
+      <ConfirmModal
         open={showModal}
         onClose={() => setShowModal(false)}
         onConfirm={() => {
@@ -161,4 +179,3 @@ const BookingTicket = () => {
 };
 
 export default BookingTicket;
-   

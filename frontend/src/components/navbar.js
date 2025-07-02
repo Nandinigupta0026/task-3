@@ -44,6 +44,7 @@ function Navbar({ user, setUser }) {
               <Link to="/dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</Link>
               <Link to="/add-event" className="text-gray-700 hover:text-blue-600">Add Event</Link>
               <Link to="/my-events" className="text-gray-700 hover:text-blue-600">My Events</Link>
+                  <Link to="/profile" className="text-gray-700 hover:text-blue-600">Profile</Link>
               <button onClick={handleLogout} className="text-red-600 font-medium">Logout</button>
             </>
           )}
@@ -54,6 +55,7 @@ function Navbar({ user, setUser }) {
               <Link to="/dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</Link>
               <Link to="/users" className="text-gray-700 hover:text-blue-600">Users</Link>
               <Link to="/vendors" className="text-gray-700 hover:text-blue-600">Vendors</Link>
+                  <Link to="/profile" className="text-gray-700 hover:text-blue-600">Profile</Link>
               <button onClick={handleLogout} className="text-red-600 font-medium">Logout</button>
             </>
           )}

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require("mongoose");
 
 const Event = require('../Models/events');
 
@@ -24,10 +25,29 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.get('/vendor-events/:vendorId' , async (req,res) => {
+  try {
+     const vendorObjectId = new mongoose.Types.ObjectId(req.params.vendorId);
+    const events = await Event.find({ vendorId: vendorObjectId });
+    res.json(events)
+  } catch (err) {
+    console.error("Error fetching vendor events:", err);
+    res.status(500).json({error : 'failed to fetch vendor events'});
+    }
+})
+
 // POST a new event (vendor only)
 router.post('/', async (req, res) => {
+   const {
+    title, description, category,
+    availableDates, availableTimes,
+    date, time, location,
+    price, seatsAvailable, vendorId 
+  } = req.body;
   try {
-    const newEvent = new Event(req.body);
+     console.log("Incoming event request:", req.body);
+    const newEvent = new Event(req.body);     
+
     await newEvent.save();
     res.status(201).json(newEvent);
   } catch (err) {
