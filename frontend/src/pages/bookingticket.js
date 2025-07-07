@@ -18,7 +18,7 @@ const BookingTicket = () => {
       try {
         const user = JSON.parse(localStorage.getItem("user"));
         const userId = user?._id;
-         if (!userId) {
+        if (!userId) {
           console.error("User not logged in");
           return;
         }
@@ -47,23 +47,20 @@ const BookingTicket = () => {
       const user = JSON.parse(localStorage.getItem("user"));
       const userId = user?._id;
       if (!userId) {
-      alert("User not logged in");
-      return;
-    }
+        alert("User not logged in");
+        return;
+      }
       console.log("userId from localStorage:", userId);
 
-       if (
-      event.category === "movie" &&
-      (!selectedDate || !selectedTime)
-    ) {
-      alert("Please select date and time for the movie.");
-      return;
-    }
+      
+
       const bookingData = {
         userId,
         eventId,
         seats,
-        date: selectedDate || event.date,
+        date: selectedDate || (event.category !== "movie"
+    ? new Date(event.date).toISOString().split("T")[0]
+    : ""),
         time: selectedTime || event.time,
       };
 

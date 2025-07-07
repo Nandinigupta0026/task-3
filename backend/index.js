@@ -6,12 +6,17 @@ const db = require('./Models/db');
 const authrout = require('./Routes/authroutes.js');
  const eventRoutes = require('./Routes/eventroutes');
  const bookingRoutes = require('./Routes/bookingroutes');
- const userRoutes = require('./Routes/usersroutes.js')
+ const userRoutes = require('./Routes/usersroutes.js');
+ const path = require('path');
 
 require('dotenv').config();
 
 app.use(bodyParser.json());
-app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:3000',  
+  credentials: true                 
+}));
 
 
 
@@ -19,7 +24,7 @@ app.get('/', (req, res) => {
   res.send('Server is running');
 });
 
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/auth',authrout);
 app.use('/events', eventRoutes);
 app.use('/bookings', bookingRoutes);

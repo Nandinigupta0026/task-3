@@ -243,7 +243,7 @@ const Profile = () => {
           )}
         </form>
 
-        <div className="mt-4 text-sm text-gray-600 text-center">
+        {/* <div className="mt-4 text-sm text-gray-600 text-center">
           Forgot password?{" "}
           <Link
             to="/forgot-password"
@@ -251,7 +251,7 @@ const Profile = () => {
           >
             Reset it here
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

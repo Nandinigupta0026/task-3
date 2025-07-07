@@ -30,6 +30,8 @@ const userSchema = new Schema({
     type: Number,
     default: 1000, 
   },
+
+  
 });
 
 module.exports = mongoose.model('User', userSchema);

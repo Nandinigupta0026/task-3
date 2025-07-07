@@ -36,6 +36,9 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(403).json({ message: errorMsg, success: false });
     }
+     console.log("User found:", user.email);
+    console.log("Entered password:", password);
+    console.log("Stored hash:", user.password);
     const isPassEqual = await bcrypt.compare(password, user.password);
     if (!isPassEqual) {
       return res.status(403).json({ message: errorMsg, success: false });

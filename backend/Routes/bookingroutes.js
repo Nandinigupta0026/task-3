@@ -29,10 +29,13 @@ router.post('/', async (req, res) => {
         return res.status(400).json({ message: "Invalid date or time selected for movie" });
       }
     } else if (event.category === "concert" || event.category === "train") {
-    
-      if (date !== event.date || time !== event.time) {
-        return res.status(400).json({ message: "Date/time mismatch for this event type" });
-      }
+     const eventDateOnly = new Date(event.date).toISOString().split("T")[0];
+  const requestDateOnly = new Date(date).toISOString().split("T")[0];
+
+  if (eventDateOnly !== requestDateOnly || time !== event.time) {
+    return res.status(400).json({ message: "Date/time mismatch for this event type" });
+  }
+      
     }
 
 

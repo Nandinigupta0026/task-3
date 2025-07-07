@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,Link } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const [user, setUser] = useState("null");
+  const [user, setUser] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -62,7 +62,9 @@ function Login() {
             Login
           </button>
         </form>
-
+       <p className="text-sm text-gray-600 mt-4 text-center">
+         <Link to="/forgot-password">Forgot Password</Link>
+        </p>
         <p className="text-sm text-gray-600 mt-4 text-center">
           Don't have an account?{" "}
           <a href="/signup" className="text-blue-600 hover:underline">

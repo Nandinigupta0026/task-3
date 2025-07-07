@@ -31,12 +31,43 @@ function EventDetails() {
       <p>
         <strong>Category:</strong> {event.category}
       </p>
-      <p>
-        <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
+       {event.category === "movie" ? (
+    <>
+      {event.availableDates?.length > 0 ? (
+        <p className="text-gray-700 mb-1">
+          <strong>Dates:</strong>{" "}
+          {event.availableDates
+            .map((date) => new Date(date).toLocaleDateString("en-IN"))
+            .join(", ")}
+        </p>
+      ) : (
+        <p className="text-gray-700 mb-1">
+          <strong>Date:</strong>{" "}
+          {new Date(event.date).toLocaleDateString("en-IN")}
+        </p>
+      )}
+
+      {event.availableTimes?.length > 0 ? (
+        <p className="text-gray-700 mb-1">
+          <strong>Times:</strong> {event.availableTimes.join(", ")}
+        </p>
+      ) : (
+        <p className="text-gray-700 mb-1">
+          <strong>Time:</strong> {event.time}
+        </p>
+      )}
+    </>
+  ) : (
+    <>
+      <p className="text-gray-700 mb-1">
+        <strong>Date:</strong>{" "}
+        {new Date(event.date).toLocaleDateString("en-IN")}
       </p>
-      <p>
+      <p className="text-gray-700 mb-1">
         <strong>Time:</strong> {event.time}
       </p>
+    </>
+  )}
       <p>
         <strong>Location:</strong> {event.location}
       </p>
